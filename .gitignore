@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+### Diagrama de clases
+*.drawio
+
 ### STS ###
 .apt_generated
 .classpath
