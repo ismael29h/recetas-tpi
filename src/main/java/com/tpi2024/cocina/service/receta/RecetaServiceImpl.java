@@ -1,11 +1,14 @@
 package com.tpi2024.cocina.service.receta;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tpi2024.cocina.domain.Categoria;
 import com.tpi2024.cocina.domain.Receta;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
+import com.tpi2024.cocina.dto.receta.RecetaGetDto;
 import com.tpi2024.cocina.mapper.receta.RecetaMapper;
 import com.tpi2024.cocina.repository.receta.RecetaRepository;
 import com.tpi2024.cocina.service.categoria.CategoriaService;
@@ -34,5 +37,16 @@ public class RecetaServiceImpl implements RecetaService {
         Receta recetaCreated = recetaRepository.save(recetaCreate);
 
         return RecetaMapper.INSTANCE.recetaToRecetaDto(recetaCreated);
+    }
+
+    @Override
+    public RecetaGetDto getRecetaGetDtoById(int id) {
+        Optional<Receta> recetaGet = recetaRepository.findById(id);
+
+        if (recetaGet.isPresent()) {
+            return RecetaMapper.INSTANCE.recetaToRecetaGetDto(recetaGet.get());
+        }
+
+        return null; // ERROR
     }
 }
