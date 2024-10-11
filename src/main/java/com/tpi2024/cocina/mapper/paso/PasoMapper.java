@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 
 import com.tpi2024.cocina.domain.Paso;
 import com.tpi2024.cocina.dto.paso.PasoDto;
+import com.tpi2024.cocina.dto.paso.PasoGetDto;
 import com.tpi2024.cocina.mapper.ingrediente.IngredienteMapper;
 
 @Mapper(uses = { IngredienteMapper.class }) // incluye el mapper de ingrediente
@@ -14,4 +15,8 @@ public interface PasoMapper {
     PasoDto pasoToPasoDto(Paso paso);
 
     Paso pasoDtoToPaso(PasoDto pasoDto);
+
+    PasoGetDto pasoToPasoGetDto(Paso paso);
+
+    Paso PasoGetDtoToPaso(PasoGetDto pasoGetDto);
 }
