@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
 import com.tpi2024.cocina.service.receta.RecetaService;
@@ -41,4 +42,13 @@ public class RecetaController {
                 .body(recetaGetDto);
     }
 
+    // 3 - Obtener listado de recetas por categoria
+    @GetMapping("/categoria/{id}")
+    public ResponseEntity<CategoriaListDto> getAllRecetaByCategoriaId(@PathVariable int id) {
+        CategoriaListDto categoriaListDto = recetaService.getAllRecetaByCategoriaId(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(categoriaListDto);
+    }
 }
