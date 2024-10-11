@@ -3,12 +3,15 @@ package com.tpi2024.cocina.controller.receta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tpi2024.cocina.dto.receta.RecetaDto;
+import com.tpi2024.cocina.dto.receta.RecetaGetDto;
 import com.tpi2024.cocina.service.receta.RecetaService;
 
 @RestController
@@ -26,6 +29,16 @@ public class RecetaController {
                 .status(HttpStatus.CREATED)
                 .body(recetaCreatedDto);
 
+    }
+
+    // 2 - Obtener receta por ID
+    @GetMapping("/{id}")
+    public ResponseEntity<RecetaGetDto> getRecetaById(@PathVariable int id) {
+        RecetaGetDto recetaGetDto = recetaService.getRecetaGetDtoById(id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(recetaGetDto);
     }
 
 }
