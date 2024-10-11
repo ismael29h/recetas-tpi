@@ -10,4 +10,6 @@ public interface RecetaService {
     public RecetaGetDto getRecetaGetDtoById(int id);
 
     public CategoriaListDto getAllRecetaByCategoriaId(int id);
+
+    public boolean deleteReceta(int id);
 }

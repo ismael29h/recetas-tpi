@@ -65,4 +65,12 @@ public class RecetaServiceImpl implements RecetaService {
         return categoriaListDto;
     }
 
+    @Override
+    public boolean deleteReceta(int id) {
+        if (recetaRepository.existsById(id)) {
+            recetaRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

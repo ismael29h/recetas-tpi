@@ -3,6 +3,7 @@ package com.tpi2024.cocina.controller.receta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,5 +51,18 @@ public class RecetaController {
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(categoriaListDto);
+    }
+
+    // 4 - Eliminar receta
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteRecetaById(@PathVariable int id) {
+        if (recetaService.deleteReceta(id)) {
+            return ResponseEntity
+                    .status(HttpStatus.NO_CONTENT)
+                    .build();
+        }
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .build();
     }
 }
