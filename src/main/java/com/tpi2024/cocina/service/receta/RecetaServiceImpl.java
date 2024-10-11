@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.tpi2024.cocina.domain.Categoria;
 import com.tpi2024.cocina.domain.Receta;
+import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
+import com.tpi2024.cocina.mapper.categoria.CategoriaMapper;
 import com.tpi2024.cocina.mapper.receta.RecetaMapper;
 import com.tpi2024.cocina.repository.receta.RecetaRepository;
 import com.tpi2024.cocina.service.categoria.CategoriaService;
@@ -41,12 +43,26 @@ public class RecetaServiceImpl implements RecetaService {
 
     @Override
     public RecetaGetDto getRecetaGetDtoById(int id) {
+        // obtner la receta con id
         Optional<Receta> recetaGet = recetaRepository.findById(id);
 
         if (recetaGet.isPresent()) {
+            // devolver su dto
             return RecetaMapper.INSTANCE.recetaToRecetaGetDto(recetaGet.get());
         }
 
         return null; // ERROR
     }
+
+    @Override
+    public CategoriaListDto getAllRecetaByCategoriaId(int id) {
+        // obtener categoria con id
+        Categoria categoria = categoriaService.getCategoriaById(id);
+
+        // ent -> dto
+        CategoriaListDto categoriaListDto = CategoriaMapper.INSTANCE.categoriaToCategoriaListDto(categoria);
+
+        return categoriaListDto;
+    }
+
 }
