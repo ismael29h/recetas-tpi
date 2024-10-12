@@ -1,11 +1,13 @@
 package com.tpi2024.cocina.service.receta;
 
+import java.time.LocalTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tpi2024.cocina.domain.Categoria;
+import com.tpi2024.cocina.domain.Paso;
 import com.tpi2024.cocina.domain.Receta;
 import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
@@ -72,5 +74,20 @@ public class RecetaServiceImpl implements RecetaService {
             return true;
         }
         return false;
+    }
+
+    /* Cálculo del tiempo total de una receta (llamada en mapper) */
+    public LocalTime calcTiempoTotal(Receta receta) {
+
+        LocalTime tiempoTotal = LocalTime.of(0, 0, 0);
+
+        for (Paso paso : receta.getPasos()) {
+            tiempoTotal = tiempoTotal.plusHours(paso.getTiempo().getHour())
+                    .plusMinutes(paso.getTiempo().getMinute())
+                    .plusSeconds(paso.getTiempo().getSecond());
+
+        }
+
+        return tiempoTotal;
     }
 }

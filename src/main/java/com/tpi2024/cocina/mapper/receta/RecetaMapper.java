@@ -11,6 +11,8 @@ import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
 import com.tpi2024.cocina.dto.receta.RecetaListDto;
 import com.tpi2024.cocina.mapper.paso.PasoMapper;
+import com.tpi2024.cocina.service.receta.RecetaService;
+import com.tpi2024.cocina.service.receta.RecetaServiceImpl;
 
 @Mapper(uses = { PasoMapper.class }) // agrega mapper de paso
 public interface RecetaMapper {
@@ -25,14 +27,9 @@ public interface RecetaMapper {
     Receta recetaGetDtoToReceta(RecetaGetDto recetaGetDto);
 
     default RecetaListDto recetaToRecetaListDto(Receta receta) {
-        LocalTime tiempoTotal = LocalTime.of(0, 0, 0);
+        RecetaService recetaService = new RecetaServiceImpl();
 
-        for (Paso paso : receta.getPasos()) {
-            tiempoTotal = tiempoTotal.plusHours(paso.getTiempo().getHour())
-                    .plusMinutes(paso.getTiempo().getMinute())
-                    .plusSeconds(paso.getTiempo().getSecond());
-
-        }
+        LocalTime tiempoTotal = recetaService.calcTiempoTotal(receta);
 
         return new RecetaListDto(
                 receta.getId(),
