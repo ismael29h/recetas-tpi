@@ -17,4 +17,6 @@ public interface RecetaService {
     public boolean deleteReceta(int id);
 
     public LocalTime calcTiempoTotal(Receta receta);
+
+    public Receta getReceteById(int id);
 }

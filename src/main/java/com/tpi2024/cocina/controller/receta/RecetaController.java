@@ -7,13 +7,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
+import com.tpi2024.cocina.dto.paso.PasoDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
+import com.tpi2024.cocina.service.paso.PasoService;
 import com.tpi2024.cocina.service.receta.RecetaService;
 
 @RestController
@@ -21,6 +24,9 @@ import com.tpi2024.cocina.service.receta.RecetaService;
 public class RecetaController {
     @Autowired
     private RecetaService recetaService;
+
+    @Autowired
+    private PasoService pasoService;
 
     // 1 - Creación de recetas
     @PostMapping()
@@ -64,5 +70,17 @@ public class RecetaController {
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .build();
+    }
+
+    // 5 - Actualizar paso
+
+    @PutMapping("/pasos/{paso_id}")
+    public ResponseEntity<?> updatePaso(
+            @PathVariable int paso_id,
+            @RequestBody PasoDto pasoDto) {
+
+        pasoService.updatePaso(paso_id, pasoDto);
+
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

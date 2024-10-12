@@ -23,12 +23,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Builder
 public class Receta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

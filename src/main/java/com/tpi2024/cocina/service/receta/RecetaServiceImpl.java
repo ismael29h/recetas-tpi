@@ -76,6 +76,7 @@ public class RecetaServiceImpl implements RecetaService {
         return false;
     }
 
+    @Override
     /* Cálculo del tiempo total de una receta (llamada en mapper) */
     public LocalTime calcTiempoTotal(Receta receta) {
 
@@ -89,5 +90,15 @@ public class RecetaServiceImpl implements RecetaService {
         }
 
         return tiempoTotal;
+    }
+
+    @Override
+    public Receta getReceteById(int id) {
+        Optional<Receta> recetaGet = recetaRepository.findById(id);
+
+        if (recetaGet.isPresent()) {
+            return recetaGet.get();
+        }
+        return null; // error
     }
 }

@@ -5,7 +5,6 @@ import java.time.LocalTime;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.tpi2024.cocina.domain.Paso;
 import com.tpi2024.cocina.domain.Receta;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
