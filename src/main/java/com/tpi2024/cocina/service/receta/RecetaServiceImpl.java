@@ -1,18 +1,23 @@
 package com.tpi2024.cocina.service.receta;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tpi2024.cocina.domain.Categoria;
+import com.tpi2024.cocina.domain.Ingrediente;
 import com.tpi2024.cocina.domain.Paso;
 import com.tpi2024.cocina.domain.Receta;
 import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
+import com.tpi2024.cocina.dto.ingrediente.IngredienteGetDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
 import com.tpi2024.cocina.mapper.categoria.CategoriaMapper;
+import com.tpi2024.cocina.mapper.ingrediente.IngredienteMapper;
 import com.tpi2024.cocina.mapper.receta.RecetaMapper;
 import com.tpi2024.cocina.repository.receta.RecetaRepository;
 import com.tpi2024.cocina.service.categoria.CategoriaService;
@@ -100,5 +105,18 @@ public class RecetaServiceImpl implements RecetaService {
             return recetaGet.get();
         }
         return null; // error
+    }
+
+    @Override
+    public List<IngredienteGetDto> getAllIngredientesByRecetaId(int receta_id) {
+        List<Ingrediente> ingredientes = new ArrayList<>();
+
+        List<Paso> pasos = getReceteById(receta_id).getPasos();
+
+        for (Paso paso : pasos) {
+            paso.getIngredientes().forEach(e -> ingredientes.add(e));
+        }
+
+        return IngredienteMapper.INSTANCE.ingredientesToIngredientesGetDtos(ingredientes);
     }
 }

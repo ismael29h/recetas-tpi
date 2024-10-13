@@ -1,5 +1,7 @@
 package com.tpi2024.cocina.controller.receta;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
+import com.tpi2024.cocina.dto.ingrediente.IngredienteGetDto;
 import com.tpi2024.cocina.dto.paso.PasoDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
@@ -82,5 +86,26 @@ public class RecetaController {
         pasoService.updatePaso(paso_id, pasoDto);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    // 6 - Obtener todos los ingredientes dada una receta y su paso
+    @GetMapping("/{receta_id}/ingredientes")
+    public ResponseEntity<List<IngredienteGetDto>> getAllIngredientes(@PathVariable int receta_id) {
+        List<IngredienteGetDto> ingredienteGetDtos = recetaService.getAllIngredientesByRecetaId(receta_id);
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ingredienteGetDtos);
+    }
+
+    // 6 - Obtener ingredientes de un paso
+    @GetMapping("/ingredientes")
+    public ResponseEntity<List<IngredienteGetDto>> getAllIngredientesByPaso(
+            @RequestParam(required = true, name = "paso_id") int paso_id) {
+
+        List<IngredienteGetDto> ingredienteGetDtos = pasoService.getAllIngredientesByPaso(paso_id);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ingredienteGetDtos);
     }
 }

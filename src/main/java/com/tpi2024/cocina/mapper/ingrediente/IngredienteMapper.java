@@ -1,5 +1,7 @@
 package com.tpi2024.cocina.mapper.ingrediente;
 
+import java.util.List;
+
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -18,4 +20,6 @@ public interface IngredienteMapper {
     IngredienteGetDto ingredienteToIngredienteGetDto(Ingrediente ingrediente);
 
     Ingrediente ingredienteGetDtoToIngrediente(IngredienteGetDto ingredienteGetDto);
+
+    List<IngredienteGetDto> ingredientesToIngredientesGetDtos(List<Ingrediente> ingredientes);
 }
