@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tpi2024.cocina.domain.Categoria;
+import com.tpi2024.cocina.exception.NotFoundException;
 import com.tpi2024.cocina.repository.categoria.CategoriaRepository;
 
 @Service
@@ -17,11 +18,8 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Categoria getCategoriaById(int id) {
         Optional<Categoria> opcCategoria = categoriaRepository.findById(id);
 
-        if (opcCategoria.isPresent()) {
-            return opcCategoria.get();
-        } else {
-            return null; // ERROR
-        }
+        return opcCategoria.orElseThrow(() -> new NotFoundException("Categoria_ID: " + id));
+
     }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.tpi2024.cocina.domain.Paso;
 import com.tpi2024.cocina.dto.ingrediente.IngredienteGetDto;
 import com.tpi2024.cocina.dto.paso.PasoDto;
+import com.tpi2024.cocina.exception.NotFoundException;
 import com.tpi2024.cocina.mapper.ingrediente.IngredienteMapper;
 import com.tpi2024.cocina.mapper.paso.PasoMapper;
 import com.tpi2024.cocina.repository.paso.PasoRepository;
@@ -54,11 +55,7 @@ public class PasoServiceImpl implements PasoService {
     public Paso getPasoById(int id) {
         Optional<Paso> pasoGet = pasoRepository.findById(id);
 
-        if (pasoGet.isPresent()) {
-            return pasoGet.get();
-        }
-
-        return null;// error
+        return pasoGet.orElseThrow(() -> new NotFoundException("Paso_ID: " + id));
     }
 
     @Override

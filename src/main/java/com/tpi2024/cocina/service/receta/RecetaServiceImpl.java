@@ -16,6 +16,7 @@ import com.tpi2024.cocina.dto.categoria.CategoriaListDto;
 import com.tpi2024.cocina.dto.ingrediente.IngredienteGetDto;
 import com.tpi2024.cocina.dto.receta.RecetaDto;
 import com.tpi2024.cocina.dto.receta.RecetaGetDto;
+import com.tpi2024.cocina.exception.NotFoundException;
 import com.tpi2024.cocina.mapper.categoria.CategoriaMapper;
 import com.tpi2024.cocina.mapper.ingrediente.IngredienteMapper;
 import com.tpi2024.cocina.mapper.receta.RecetaMapper;
@@ -51,14 +52,15 @@ public class RecetaServiceImpl implements RecetaService {
     @Override
     public RecetaGetDto getRecetaGetDtoById(int id) {
         // obtner la receta con id
-        Optional<Receta> recetaGet = recetaRepository.findById(id);
 
-        if (recetaGet.isPresent()) {
-            // devolver su dto
-            return RecetaMapper.INSTANCE.recetaToRecetaGetDto(recetaGet.get());
-        }
+        /*
+         * Optional<Receta> recetaGet = recetaRepository.findById(id);
+         * 
+         * recetaGet.orElseThrow(() -> new NotFoundException("Receta_ID: " + id));
+         */
 
-        return null; // ERROR
+        return RecetaMapper.INSTANCE.recetaToRecetaGetDto(getReceteById(id));
+
     }
 
     @Override
@@ -101,10 +103,8 @@ public class RecetaServiceImpl implements RecetaService {
     public Receta getReceteById(int id) {
         Optional<Receta> recetaGet = recetaRepository.findById(id);
 
-        if (recetaGet.isPresent()) {
-            return recetaGet.get();
-        }
-        return null; // error
+        return recetaGet.orElseThrow(() -> new NotFoundException("Receta_ID: " + id));
+
     }
 
     @Override
