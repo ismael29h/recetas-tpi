@@ -15,6 +15,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Override
+    /* Devuelve una categoria a partir de su ID */
     public Categoria getCategoriaById(int id) {
         Optional<Categoria> opcCategoria = categoriaRepository.findById(id);
 

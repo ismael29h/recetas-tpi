@@ -14,13 +14,13 @@ public interface RecetaService {
 
     public RecetaGetDto getRecetaGetDtoById(int id);
 
+    public Receta getRecetaById(int id);
+
     public CategoriaListDto getAllRecetaByCategoriaId(int id);
 
     public boolean deleteReceta(int id);
 
     public LocalTime calcTiempoTotal(Receta receta);
-
-    public Receta getReceteById(int id);
 
     public List<IngredienteGetDto> getAllIngredientesByRecetaId(int receta_id);
 

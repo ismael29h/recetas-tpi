@@ -32,6 +32,7 @@ public class RecetaServiceImpl implements RecetaService {
     private CategoriaService categoriaService;
 
     @Override
+    /* Crea nueva receta */
     public RecetaDto createReceta(RecetaDto recetaCreateDto) {
         // dto -> entidad
         Receta recetaCreate = RecetaMapper.INSTANCE.recetaDtoToReceta(recetaCreateDto);
@@ -43,27 +44,28 @@ public class RecetaServiceImpl implements RecetaService {
         // asigno receta a cada paso
         recetaCreate.getPasos().forEach(paso -> paso.setReceta(recetaCreate));
 
-        // guardar: cascade all
+        // guardar
         Receta recetaCreated = recetaRepository.save(recetaCreate);
 
         return RecetaMapper.INSTANCE.recetaToRecetaDto(recetaCreated);
     }
 
     @Override
+    /* Devuelve un DTO a partir de un ID */
     public RecetaGetDto getRecetaGetDtoById(int id) {
-        // obtner la receta con id
-
-        /*
-         * Optional<Receta> recetaGet = recetaRepository.findById(id);
-         * 
-         * recetaGet.orElseThrow(() -> new NotFoundException("Receta_ID: " + id));
-         */
-
-        return RecetaMapper.INSTANCE.recetaToRecetaGetDto(getReceteById(id));
-
+        return RecetaMapper.INSTANCE.recetaToRecetaGetDto(getRecetaById(id));
     }
 
     @Override
+    /* Devuelve la entidad Receta a partir de su ID */
+    public Receta getRecetaById(int id) {
+        Optional<Receta> recetaGet = recetaRepository.findById(id);
+
+        return recetaGet.orElseThrow(() -> new NotFoundException("Receta_ID: " + id));
+    }
+
+    @Override
+    /* Retorna una lista de recetaDto que corresponde a una categoría */
     public CategoriaListDto getAllRecetaByCategoriaId(int id) {
         // obtener categoria con id
         Categoria categoria = categoriaService.getCategoriaById(id);
@@ -75,6 +77,7 @@ public class RecetaServiceImpl implements RecetaService {
     }
 
     @Override
+    /* Quita una receta de la persistencia */
     public boolean deleteReceta(int id) {
         if (recetaRepository.existsById(id)) {
             recetaRepository.deleteById(id);
@@ -84,7 +87,20 @@ public class RecetaServiceImpl implements RecetaService {
     }
 
     @Override
-    /* Cálculo del tiempo total de una receta (llamada en mapper) */
+    /* Obtiene una lista de ingredientesGetDto que corresponde a una receta */
+    public List<IngredienteGetDto> getAllIngredientesByRecetaId(int receta_id) {
+        List<Ingrediente> ingredientes = new ArrayList<>();
+
+        List<Paso> pasos = getRecetaById(receta_id).getPasos();
+
+        for (Paso paso : pasos) {
+            paso.getIngredientes().forEach(e -> ingredientes.add(e));
+        }
+
+        return IngredienteMapper.INSTANCE.ingredientesToIngredientesGetDtos(ingredientes);
+    }
+
+    /* Cálculo del tiempo total de una receta (usada en mapper) */
     public LocalTime calcTiempoTotal(Receta receta) {
 
         LocalTime tiempoTotal = LocalTime.of(0, 0, 0);
@@ -99,24 +115,4 @@ public class RecetaServiceImpl implements RecetaService {
         return tiempoTotal;
     }
 
-    @Override
-    public Receta getReceteById(int id) {
-        Optional<Receta> recetaGet = recetaRepository.findById(id);
-
-        return recetaGet.orElseThrow(() -> new NotFoundException("Receta_ID: " + id));
-
-    }
-
-    @Override
-    public List<IngredienteGetDto> getAllIngredientesByRecetaId(int receta_id) {
-        List<Ingrediente> ingredientes = new ArrayList<>();
-
-        List<Paso> pasos = getReceteById(receta_id).getPasos();
-
-        for (Paso paso : pasos) {
-            paso.getIngredientes().forEach(e -> ingredientes.add(e));
-        }
-
-        return IngredienteMapper.INSTANCE.ingredientesToIngredientesGetDtos(ingredientes);
-    }
 }

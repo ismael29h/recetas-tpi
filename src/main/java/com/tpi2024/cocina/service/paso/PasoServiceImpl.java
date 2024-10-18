@@ -29,18 +29,22 @@ public class PasoServiceImpl implements PasoService {
     RecetaService recetaService;
 
     @Override
+    /* Actualiza un Paso */
     public void updatePaso(int id, PasoDto pasoDto) {
+        // lista de ID de ingredientes que se eliminarán *
         List<Integer> ingredientesIDs = new ArrayList<>();
 
+        // entidad guardada
         Paso paso = getPasoById(id);
 
+        // entidad a guardar
         Paso pasoMod = PasoMapper.INSTANCE.pasoDtoToPaso(pasoDto);
 
         paso.setDescripcion(pasoMod.getDescripcion());
         paso.setTiempo(pasoMod.getTiempo());
         paso.setEsOpcional(pasoMod.isEsOpcional());
 
-        // resguardo de ids de los ingredientes que quedarán sueltos
+        // resguardo de ids de los ingredientes que quedarán sueltos *
         paso.getIngredientes().forEach(i -> ingredientesIDs.add(i.getId()));
 
         paso.setIngredientes(pasoMod.getIngredientes());
@@ -52,6 +56,7 @@ public class PasoServiceImpl implements PasoService {
     }
 
     @Override
+    /* Obtener el Paso por el ID */
     public Paso getPasoById(int id) {
         Optional<Paso> pasoGet = pasoRepository.findById(id);
 
@@ -59,6 +64,7 @@ public class PasoServiceImpl implements PasoService {
     }
 
     @Override
+    /* Obtener todos los ingredientes (getDto) de un paso */
     public List<IngredienteGetDto> getAllIngredientesByPaso(int paso_id) {
         Paso paso = getPasoById(paso_id);
 

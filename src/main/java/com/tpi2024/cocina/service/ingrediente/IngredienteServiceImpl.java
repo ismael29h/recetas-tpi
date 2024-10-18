@@ -11,6 +11,7 @@ public class IngredienteServiceImpl implements IngredienteService {
     IngredienteRepository ingredienteRepository;
 
     @Override
+    /* Elimina un ingrediente por su ID */
     public void deleteIngrediente(int id) {
         ingredienteRepository.deleteById(id);
     }

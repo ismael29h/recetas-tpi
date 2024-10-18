@@ -3,6 +3,7 @@ package com.tpi2024.cocina.mapper.receta;
 import java.time.LocalTime;
 
 import org.mapstruct.Mapper;
+//import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.tpi2024.cocina.domain.Receta;
