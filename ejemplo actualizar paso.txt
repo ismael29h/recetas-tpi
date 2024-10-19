@@ -1,0 +1,13 @@
+    {
+      "descripcion": "Pelar y cortar las zanahorias.",
+      "tiempo": "00:02:18",
+      "esOpcional": true,
+      "ingredientes": [
+        {
+          "nombre": "Zanahoria"
+        },
+        {
+          "nombre": "Tomate"
+        }
+      ]
+    }
